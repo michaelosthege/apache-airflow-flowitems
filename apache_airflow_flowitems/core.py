@@ -82,11 +82,11 @@ class PythonItem(FlowItem):
             kwargs[k] = json.loads(upstream_result)
 
         # Forward the context dict if the callable takes a "context" parameter
-        spec = inspect.getfullargspec(self.callable)
+        spec = inspect.getfullargspec(self.python_callable)
         if "context" in spec.args or "context" in spec.kwonlyargs:
-            result = self.callable(context=context, **kwargs)
+            result = self.python_callable(context=context, **kwargs)
         else:
-            result = self.callable(**kwargs)
+            result = self.python_callable(**kwargs)
         return json.dumps(result)
 
     def __call__(self, **kwargs: Mapping[str, Any]) -> PythonOperator:
@@ -104,7 +104,7 @@ class PythonItem(FlowItem):
             Instance of the created operator.
         """
         if "task_id" not in kwargs:
-            kwargs["task_id"] = self.callable.__name__
+            kwargs["task_id"] = self.python_callable.__name__
         t = PythonOperator(python_callable=self._run, **kwargs)
         t.set_upstream(self.upstream_tasks)
         return t
