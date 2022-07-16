@@ -1,5 +1,5 @@
 [![PyPI version](https://img.shields.io/pypi/v/apache-airflow-flowitems)](https://pypi.org/project/apache-airflow-flowitems)
-[![pipeline](https://github.com/michaelosthege/apache-airflow-flowitems/workflows/pipeline/badge.svg)](https://github.com/michaelosthege/apache-airflow-flowitems/actions)
+[![pipeline](https://github.com/michaelosthege/apache-airflow-flowitems/workflows/tests/badge.svg)](https://github.com/michaelosthege/apache-airflow-flowitems/actions)
 [![coverage](https://codecov.io/gh/michaelosthege/apache-airflow-flowitems/branch/main/graph/badge.svg)](https://codecov.io/gh/michaelosthege/apache-airflow-flowitems)
 
 # `apache-airflow-flowitems`
