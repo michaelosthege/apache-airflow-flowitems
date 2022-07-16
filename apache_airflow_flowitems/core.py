@@ -1,7 +1,6 @@
 import abc
 import copy
 import inspect
-import json
 from typing import Any, Callable, Mapping, Sequence
 
 from airflow.models import BaseOperator
@@ -78,8 +77,7 @@ class PythonItem(FlowItem):
         kwargs = copy(self.kwargs_static)
 
         for k, taskid in self.kwargs_upstream.items():
-            upstream_result = task_instance.xcom_pull(task_ids=[taskid])[0]
-            kwargs[k] = json.loads(upstream_result)
+            kwargs[k] = task_instance.xcom_pull(task_ids=[taskid])[0]
 
         # Forward the context dict if the callable takes a "context" parameter
         spec = inspect.getfullargspec(self.python_callable)
@@ -87,7 +85,7 @@ class PythonItem(FlowItem):
             result = self.python_callable(context=context, **kwargs)
         else:
             result = self.python_callable(**kwargs)
-        return json.dumps(result)
+        return result
 
     def __call__(self, **kwargs: Mapping[str, Any]) -> PythonOperator:
         """Creates a PythonOperator for the execution of this flow item.
