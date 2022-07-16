@@ -127,3 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+apache_airflow_flowitems/py.typed
