@@ -3,7 +3,12 @@ import copy
 import inspect
 from typing import Any, Callable, Dict, List, Mapping, Sequence, Union
 
-from airflow.models import BaseOperator, Operator
+from airflow.models import BaseOperator
+
+try:
+    from airflow.models import Operator
+except:
+    Operator = BaseOperator
 from airflow.models.xcom_arg import XComArg
 from airflow.operators.python import PythonOperator
 
