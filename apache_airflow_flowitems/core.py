@@ -98,8 +98,8 @@ class PythonItem(FlowItem):
             kwargs[k] = xarg.resolve(context)
 
         # Forward the context dict if the callable takes a "context" parameter
-        spec = inspect.getfullargspec(self.python_callable)
-        if "context" in spec.args or "context" in spec.kwonlyargs:
+        spec = inspect.signature(self.python_callable)
+        if "context" in spec.parameters:
             result = self.python_callable(context=context, **kwargs)
         else:
             result = self.python_callable(**kwargs)
