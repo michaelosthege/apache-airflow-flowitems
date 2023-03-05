@@ -1,3 +1,4 @@
+import functools
 from datetime import datetime
 from unittest.mock import MagicMock
 
@@ -97,6 +98,25 @@ class TestPythonItem:
         pass
 
     def test_run_autocontext(self):
+        def fun_with_context(context):
+            return context["run_id"]
+
+        pi = core.PythonItem(fun_with_context)
+
+        context = {"run_id": "manual__123"}
+        result = pi._run(**context)
+        assert result == "manual__123"
+        pass
+
+    def test_run_autocontext_of_decorated(self):
+        def dummy_decorator(f):
+            @functools.wraps(f)
+            def wrapper(*args, **kwargs):
+                return f(*args, **kwargs)
+
+            return wrapper
+
+        @dummy_decorator
         def fun_with_context(context):
             return context["run_id"]
 
